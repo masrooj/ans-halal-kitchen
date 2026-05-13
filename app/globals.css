@@ -1,0 +1,26 @@
+@import "lenis/dist/lenis.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  .animate-marquee {
+    animation: marquee 30s linear infinite;
+  }
+  .animate-marquee-slow {
+    animation-duration: 45s;
+  }
+  .animate-marquee-reverse {
+    animation: marquee 30s linear infinite;
+    animation-direction: reverse;
+  }
+}
