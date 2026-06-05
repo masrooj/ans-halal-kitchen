@@ -9,12 +9,14 @@ import { contactSchema, type ContactInput } from "@/lib/schemas";
 import { sectionVariants, viewportOnce } from "@/lib/animations";
 import { SITE } from "@/lib/site";
 import { cn } from "@/lib/cn";
+import { HOME_PAGE } from "@/cms/home.page";
 
 const inputCls =
   "border border-ans-gold/20 rounded-xl px-4 py-3 font-sans text-sm outline-none transition-shadow focus:border-ans-emerald focus:ring-2 focus:ring-ans-emerald/20";
 const labelCls = "text-xs font-medium text-ans-muted";
 
 export function ContactUs() {
+  const c = HOME_PAGE.contact;
   const {
     register,
     handleSubmit,
@@ -40,20 +42,20 @@ export function ContactUs() {
           className="text-center"
         >
           <h2 className="font-display text-[40px] text-ans-emerald md:text-[48px]">
-            Find us. Feed yourself.
+            {c.headline}
           </h2>
         </motion.div>
 
         <div className="mt-14 grid gap-12 lg:grid-cols-2">
           <div>
             <p className="mb-6 font-sans text-lg font-semibold text-ans-emerald">
-              Send us a message
+              {c.formTitle}
             </p>
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4" noValidate>
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="flex flex-col gap-1">
                   <label className={labelCls} htmlFor="c-name">
-                    Name
+                    {c.labels.name}
                   </label>
                   <input
                     id="c-name"
@@ -66,7 +68,7 @@ export function ContactUs() {
                 </div>
                 <div className="flex flex-col gap-1">
                   <label className={labelCls} htmlFor="c-email">
-                    Email
+                    {c.labels.email}
                   </label>
                   <input
                     id="c-email"
@@ -81,7 +83,7 @@ export function ContactUs() {
               </div>
               <div className="flex flex-col gap-1">
                 <label className={labelCls} htmlFor="c-subject">
-                  Subject
+                  {c.labels.subject}
                 </label>
                 <input
                   id="c-subject"
@@ -94,7 +96,7 @@ export function ContactUs() {
               </div>
               <div className="flex flex-col gap-1">
                 <label className={labelCls} htmlFor="c-message">
-                  Message
+                  {c.labels.message}
                 </label>
                 <textarea
                   id="c-message"
@@ -110,7 +112,7 @@ export function ContactUs() {
                 type="submit"
                 className="w-fit rounded-full bg-ans-emerald px-10 py-3.5 font-sans font-semibold text-white transition-transform hover:scale-[1.02] hover:bg-ans-emerald-mid"
               >
-                Send message
+                {c.submit}
               </button>
             </form>
           </div>
@@ -122,7 +124,7 @@ export function ContactUs() {
                   <MapPin className="h-6 w-6" />
                 </span>
                 <div>
-                  <p className="font-sans font-semibold text-ans-charcoal">Visit Us</p>
+                  <p className="font-sans font-semibold text-ans-charcoal">{c.visitTitle}</p>
                   <p className="mt-1 font-sans text-sm text-ans-muted">{SITE.address}</p>
                   <a
                     href={SITE.googleMapsPlace}
@@ -130,7 +132,7 @@ export function ContactUs() {
                     rel="noopener noreferrer"
                     className="mt-2 inline-block font-sans text-sm text-ans-gold hover:text-ans-emerald"
                   >
-                    Open in Google Maps →
+                    {c.directionsLink}
                   </a>
                 </div>
               </div>
@@ -139,7 +141,7 @@ export function ContactUs() {
                   <Phone className="h-6 w-6" />
                 </span>
                 <div>
-                  <p className="font-sans font-semibold text-ans-charcoal">Call Us</p>
+                  <p className="font-sans font-semibold text-ans-charcoal">{c.phoneTitle}</p>
                   <a
                     href={`tel:${SITE.phoneTel}`}
                     className="mt-1 block font-sans text-sm text-ans-muted hover:text-ans-emerald"
@@ -153,14 +155,14 @@ export function ContactUs() {
                   <Instagram className="h-6 w-6" />
                 </span>
                 <div>
-                  <p className="font-sans font-semibold text-ans-charcoal">Follow Us</p>
+                  <p className="font-sans font-semibold text-ans-charcoal">{c.socialTitle}</p>
                   <a
                     href={SITE.instagram}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-1 block font-sans text-sm text-ans-muted hover:text-ans-emerald"
                   >
-                    @theanshalalkitchen
+                    {SITE.instagramHandle}
                   </a>
                 </div>
               </div>
@@ -168,7 +170,7 @@ export function ContactUs() {
 
             <div className="mt-6 overflow-hidden rounded-2xl">
               <iframe
-                title="A&amp;N&apos;s Halal Kitchen on Google Maps"
+                title={`${SITE.name} on Google Maps`}
                 src={SITE.googleMapsEmbed}
                 width="100%"
                 height={280}

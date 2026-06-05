@@ -2,19 +2,12 @@ import Link from "next/link";
 import { Instagram, Facebook } from "lucide-react";
 import { hasMapsVenuePhotosEnabled } from "@/lib/images";
 import { SITE } from "@/lib/site";
-
-const navItems = [
-  { href: "#story", label: "About" },
-  { href: "#menu", label: "Full Menu" },
-  { href: "#weekend-deals", label: "Weekend Specials" },
-  { href: "#menu", label: "Biryani" },
-  { href: "#menu", label: "Kabab Rolls" },
-  { href: "#menu", label: "Burgers" },
-  { href: "#menu", label: "Wings" },
-  { href: "#menu", label: "Desserts" },
-];
+import { FOOTER_QUICK_LINKS } from "@/cms/nav.catalog";
+import { HOME_PAGE } from "@/cms/home.page";
 
 export function Footer() {
+  const f = HOME_PAGE.footer;
+
   return (
     <footer className="relative bg-ans-emerald pt-20 pb-10 text-white">
       <div
@@ -24,14 +17,12 @@ export function Footer() {
       <div className="relative mx-auto max-w-[1320px] px-6 md:px-12 lg:px-20">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
           <div>
-            <p className="font-display text-2xl italic text-white">
-              A&amp;N&apos;s Halal Kitchen
-            </p>
+            <p className="font-display text-2xl italic text-white">{SITE.name}</p>
             <p className="mt-2 font-sans text-[11px] uppercase tracking-wider text-ans-gold/60">
-              Zabiha Halal · Sugar Land, TX
+              {f.sublineKicker}
             </p>
             <p className="mt-3 font-display text-base italic text-white/50">
-              Straight from Karachi. Served with love.
+              {f.taglineItalic}
             </p>
             <div className="mt-6 flex gap-3">
               <a
@@ -57,10 +48,10 @@ export function Footer() {
 
           <div>
             <p className="font-sans text-[10px] font-medium uppercase tracking-widest text-ans-gold/50">
-              Menu
+              {f.columnMenu}
             </p>
             <ul className="mt-4 space-y-2">
-              {navItems.map((item) => (
+              {FOOTER_QUICK_LINKS.map((item) => (
                 <li key={item.label + item.href}>
                   <Link
                     href={item.href}
@@ -75,20 +66,21 @@ export function Footer() {
 
           <div>
             <p className="font-sans text-[10px] font-medium uppercase tracking-widest text-ans-gold/50">
-              Hours
+              {f.columnHours}
             </p>
             <ul className="mt-4 space-y-2 font-sans text-sm text-white/60">
-              <li>Mon – Fri: 11:00 AM – 10:00 PM</li>
-              <li>Sat – Sun: 10:00 AM – 10:00 PM</li>
+              {f.hourLines.map((line) => (
+                <li key={line}>{line}</li>
+              ))}
             </ul>
             <p className="mt-2 font-sans text-xs italic text-ans-gold">
-              Halwa Poori: Weekends only — until sold out
+              {f.halwaHoursNote}
             </p>
           </div>
 
           <div>
             <p className="font-sans text-[10px] font-medium uppercase tracking-widest text-ans-gold/50">
-              Order Online
+              {f.columnOrder}
             </p>
             <div className="mt-4 flex flex-col gap-2">
               <a
@@ -97,7 +89,7 @@ export function Footer() {
                 rel="noopener noreferrer"
                 className="inline-flex w-fit rounded-full border border-white/20 px-4 py-2 text-sm text-white/80 hover:border-ans-gold hover:text-ans-gold"
               >
-                DoorDash
+                {f.doorDashLabel}
               </a>
               <a
                 href={SITE.uberEats}
@@ -105,7 +97,7 @@ export function Footer() {
                 rel="noopener noreferrer"
                 className="inline-flex w-fit rounded-full border border-white/20 px-4 py-2 text-sm text-white/80 hover:border-ans-gold hover:text-ans-gold"
               >
-                Uber Eats
+                {f.uberEatsLabel}
               </a>
             </div>
             <div className="mt-6 space-y-1 font-sans text-sm text-white/60">
@@ -118,30 +110,31 @@ export function Footer() {
               >
                 {SITE.email}
               </a>
-              <p>12925 W Bellfort Blvd</p>
-              <p>Sugar Land, TX 77478</p>
+              {SITE.addressLines.map((line) => (
+                <p key={line}>{line}</p>
+              ))}
             </div>
           </div>
         </div>
 
         {hasMapsVenuePhotosEnabled ? (
           <p className="mx-auto mt-12 max-w-2xl text-center font-sans text-[11px] leading-relaxed text-white/35">
-            Some venue photos come from the{" "}
+            {f.mapsAttributionLead}{" "}
             <a
               href={SITE.googleMapsPlace}
               target="_blank"
               rel="noopener noreferrer"
               className="text-ans-gold/45 underline-offset-2 hover:text-ans-gold"
             >
-              Google Maps
+              {f.mapsAttributionMapsWord}
             </a>{" "}
-            listing. Contributor credits:{" "}
+            {f.mapsAttributionTrail}{" "}
             <Link
               href="/photos/maps/ATTRIBUTION.txt"
               className="text-ans-gold/45 underline-offset-2 hover:text-ans-gold"
               prefetch={false}
             >
-              ATTRIBUTION.txt
+              {f.mapsAttributionFile}
             </Link>
             .
           </p>
@@ -150,14 +143,12 @@ export function Footer() {
         <div className="mt-16 border-t border-white/10 pt-8">
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
             <p className="font-sans text-[11px] text-white/25">
-              © 2026 A&amp;N&apos;s Halal Kitchen. All rights reserved.
+              © {f.copyrightYear} {f.copyrightRestaurant}. {f.copyrightRights}
             </p>
-            <p className="font-sans text-[11px] text-white/25">
-              Privacy Policy · Halal Certification · Accessibility
-            </p>
+            <p className="font-sans text-[11px] text-white/25">{f.legalLinks}</p>
           </div>
           <p className="mt-4 text-center font-sans text-[11px] text-ans-gold/40">
-            🟢 100% Zabiha Handcut Halal — Certified &amp; Family Owned
+            {f.halalStripe}
           </p>
         </div>
       </div>

@@ -6,7 +6,7 @@
 
 const MENU_DIR = "/images/menu";
 
-/** Menu card images — all keys used in `data/menu.ts` image field */
+/** Menu card images — all keys used in `cms/menu.catalog.ts` image field */
 export const MENU_IMAGE_URLS: Record<string, string> = {
   "halwa-puri": `${MENU_DIR}/halwa-puri.jpg`,
   "halwa-puri-keema": `${MENU_DIR}/halwa-puri-keema.jpg`,

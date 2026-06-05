@@ -11,27 +11,19 @@ import {
 import { motion } from "framer-motion";
 import { sectionVariants, viewportOnce } from "@/lib/animations";
 import { SITE } from "@/lib/site";
-
-const genericAlts = [
-  "Chicken biryani bowl overhead — golden rice and spices",
-  "Naan bread fresh from the tandoor",
-  "Beef nihari in a steaming bowl",
-  "Bihari kebab rolled in paratha",
-  "Halwa poori breakfast plate",
-  "Chicken karahi in a wok",
-  "Pakistani restaurant table setting",
-  "Spiced crispy fried chicken",
-  "Desi chai in a cup",
-];
+import { HOME_PAGE } from "@/cms/home.page";
 
 function galleryAltForIndex(i: number): string {
+  const ig = HOME_PAGE.instagramGallery;
   if (hasMapsVenuePhotosEnabled && i === 0) {
-    return "A&N's Halal Kitchen — venue photo shared on Google Maps";
+    return ig.mapsAltFirstTile;
   }
-  return genericAlts[i] ?? "Pakistani halal cuisine";
+  return ig.galleryAlts[i] ?? ig.fallbackAlt;
 }
 
 export function InstagramGallery() {
+  const ig = HOME_PAGE.instagramGallery;
+
   return (
     <section className="bg-ans-cream py-28 md:py-32 lg:py-40">
       <div className="mx-auto max-w-[1320px] px-6 md:px-12 lg:px-20">
@@ -43,7 +35,7 @@ export function InstagramGallery() {
           className="text-center"
         >
           <h2 className="font-display text-[40px] text-ans-emerald md:text-[48px]">
-            Fresh food. Real photos.
+            {ig.headline}
           </h2>
           <Link
             href={SITE.instagram}
@@ -51,7 +43,7 @@ export function InstagramGallery() {
             rel="noopener noreferrer"
             className="mt-3 inline-block font-sans text-ans-muted transition-colors hover:text-ans-emerald"
           >
-            @theanshalalkitchen on Instagram
+            {ig.handleLinkLabel}
           </Link>
         </motion.div>
 
@@ -83,7 +75,7 @@ export function InstagramGallery() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 font-sans text-ans-gold transition-colors hover:text-ans-emerald"
           >
-            Follow us on Instagram →
+            {ig.followCta}
             <Instagram className="h-5 w-5" aria-hidden />
           </Link>
         </div>

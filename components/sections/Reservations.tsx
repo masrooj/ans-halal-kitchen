@@ -12,8 +12,9 @@ import {
 } from "@/lib/schemas";
 import { buildTimeOptions } from "@/lib/timeOptions";
 import { sectionVariants, viewportOnce } from "@/lib/animations";
-import { SITE } from "@/lib/site";
+import { SITE, BUSINESS_HOURS_LINES } from "@/lib/site";
 import { cn } from "@/lib/cn";
+import { HOME_PAGE } from "@/cms/home.page";
 
 const timeOptions = buildTimeOptions();
 
@@ -24,6 +25,7 @@ const inputCls =
 const errCls = "text-xs text-ans-crimson";
 
 export function Reservations() {
+  const r = HOME_PAGE.reservations;
   const [done, setDone] = useState(false);
   const {
     register,
@@ -52,22 +54,18 @@ export function Reservations() {
           viewport={viewportOnce}
         >
           <p className="font-sans text-xs font-medium uppercase tracking-widest text-ans-gold/60">
-            Dine in &amp; catering
+            {r.eyebrow}
           </p>
           <h2 className="mt-4 font-display text-[40px] italic leading-tight text-white md:text-[52px]">
-            Book a table or place a catering order.
+            {r.headline}
           </h2>
-          <p className="mt-4 font-sans text-[17px] leading-8 text-white/60">
-            Whether it&apos;s a family dinner, a group gathering, or a catering
-            event, A&amp;N&apos;s Halal Kitchen is ready to serve you. Our
-            20–25 seat dine-in space is cozy, clean and welcoming.
-          </p>
+          <p className="mt-4 font-sans text-[17px] leading-8 text-white/60">{r.intro}</p>
 
           <div className="mt-10 flex flex-col gap-4">
             <div className="flex gap-4 rounded-xl border border-white/10 bg-white/5 p-4">
               <MapPin className="h-5 w-5 shrink-0 text-ans-gold" />
               <div>
-                <p className="font-sans text-sm font-semibold">Location</p>
+                <p className="font-sans text-sm font-semibold">{r.locationTitle}</p>
                 <p className="font-sans text-sm text-white/60">{SITE.address}</p>
                 <a
                   href={SITE.googleMapsPlace}
@@ -75,28 +73,29 @@ export function Reservations() {
                   rel="noopener noreferrer"
                   className="mt-1 inline-block font-sans text-sm text-ans-gold hover:underline"
                 >
-                  Get Directions →
+                  {r.directionsCta}
                 </a>
               </div>
             </div>
             <div className="flex gap-4 rounded-xl border border-white/10 bg-white/5 p-4">
               <Phone className="h-5 w-5 shrink-0 text-ans-gold" />
               <div>
-                <p className="font-sans text-sm font-semibold">Call Us</p>
+                <p className="font-sans text-sm font-semibold">{r.phoneTitle}</p>
                 <a
                   href={`tel:${SITE.phoneTel}`}
                   className="font-sans text-sm text-white/80 hover:text-white"
                 >
                   {SITE.phoneDisplay}
                 </a>
-                <p className="font-sans text-xs text-white/45">tap to call</p>
+                <p className="font-sans text-xs text-white/45">{r.phoneHint}</p>
               </div>
             </div>
             <div className="flex gap-4 rounded-xl border border-white/10 bg-white/5 p-4">
               <Clock className="h-5 w-5 shrink-0 text-ans-gold" />
               <div className="font-sans text-sm text-white/65">
-                <p>Mon–Fri: 11:00 AM – 10:00 PM</p>
-                <p>Sat–Sun: 10:00 AM – 10:00 PM</p>
+                {BUSINESS_HOURS_LINES.map((line) => (
+                  <p key={line}>{line}</p>
+                ))}
               </div>
             </div>
           </div>

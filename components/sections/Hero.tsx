@@ -11,48 +11,25 @@ import {
   heroBackgroundSrc,
 } from "@/lib/images";
 import { SITE } from "@/lib/site";
+import { HOME_PAGE } from "@/cms/home.page";
 
-const floatCards = [
-  {
-    emoji: "🍛",
-    title: "Chicken Biryani",
-    tag: "Best Seller",
-    className: "top-[6%] left-[4%] -rotate-3",
-    delay: 0,
-  },
-  {
-    emoji: "🥩",
-    title: "Beef Nihari",
-    tag: "Karachi Recipe",
-    className: "top-[8%] right-[6%] rotate-2",
-    delay: 0.15,
-  },
-  {
-    emoji: "🌯",
-    title: "Bihari Kabab Roll",
-    tag: "Fan Favorite",
-    className: "top-[38%] left-[2%] -rotate-1",
-    delay: 0.3,
-  },
-  {
-    emoji: "🍗",
-    title: "Halwa Poori",
-    tag: "Weekends Only",
-    className: "bottom-[18%] right-[4%] rotate-3",
-    delay: 0.45,
-  },
-  {
-    emoji: "🔥",
-    title: "Hot Wings",
-    tag: "6pc $13.95",
-    className: "bottom-[10%] left-[8%] -rotate-2",
-    delay: 0.6,
-  },
-];
+/**
+ * Original scatter layout (same as first hero). Full literals so Tailwind JIT
+ * always emits these utilities — do not build positioning from runtime strings.
+ * Must match `HOME_PAGE.hero.floatCards` length and order.
+ */
+const HERO_FLOAT_CARD_LAYOUT = [
+  "top-[6%] left-[4%] -rotate-3",
+  "top-[8%] right-[6%] rotate-2",
+  "top-[38%] left-[2%] -rotate-1",
+  "bottom-[18%] right-[4%] rotate-3",
+  "bottom-[10%] left-[8%] -rotate-2",
+] as const;
 
 export function Hero() {
   const { scrollY } = useScroll();
   const yCollage = useTransform(scrollY, [0, 600], [0, -80]);
+  const h = HOME_PAGE.hero;
 
   return (
     <section
@@ -63,9 +40,7 @@ export function Hero() {
         <Image
           src={heroBackgroundSrc}
           alt={
-            hasMapsVenuePhotosEnabled
-              ? "A&N's Halal Kitchen — venue photo from the Google Maps listing"
-              : "Aromatic Pakistani biryani bowl — golden rice and spices"
+            hasMapsVenuePhotosEnabled ? h.imageAltMaps : h.imageAltStock
           }
           fill
           priority
@@ -87,33 +62,31 @@ export function Hero() {
           <h1 className="mt-6 font-display font-normal">
             <span className="block text-[clamp(56px,8vw,110px)] leading-[0.85]">
               <AnimatedLine
-                text="Taste of"
+                text={h.headlineLines[0]}
                 className="text-ans-gold"
                 delayOffset={0}
               />
             </span>
             <span className="mt-1 block text-[clamp(56px,8vw,110px)] leading-[0.85]">
               <AnimatedLine
-                text="Karachi,"
+                text={h.headlineLines[1]}
                 className="text-white"
                 delayOffset={0.35}
               />
             </span>
             <span className="mt-1 block text-[clamp(56px,8vw,110px)] leading-[0.85]">
               <AnimatedLine
-                text="In Sugar Land."
+                text={h.headlineLines[2]}
                 className="text-white"
                 delayOffset={0.7}
               />
             </span>
           </h1>
           <p className="mt-4 font-sans text-sm font-medium text-ans-gold-light/95">
-            We only serve Zabiha Handcut Halal Food
+            {h.sublineGold}
           </p>
           <p className="mt-4 max-w-lg font-sans text-[17px] leading-7 text-white/70">
-            Authentic Zabiha Halal Pakistani cuisine — from our family kitchen to
-            your table. Biryani, Nihari, Kabab Rolls &amp; more, crafted from
-            Karachi recipes.
+            {h.lead}
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
             <a
@@ -122,24 +95,22 @@ export function Hero() {
               rel="noopener noreferrer"
               className="rounded-full bg-ans-gold px-8 py-3.5 font-sans font-semibold text-ans-emerald transition-all hover:scale-[1.02] hover:bg-ans-gold-light"
             >
-              Order Online
+              {h.ctaOrder}
             </a>
             <a
               href="#menu"
               className="rounded-full border border-white/40 px-8 py-3.5 font-sans font-medium text-white transition-colors hover:bg-white/10"
             >
-              View Full Menu →
+              {h.ctaMenu}
             </a>
           </div>
           <div className="mt-10 flex flex-wrap items-center gap-4 font-sans text-[13px] text-white/60">
             <span className="font-display text-2xl text-ans-gold md:text-3xl">
-              ⭐ 4.9
+              {h.ratingDisplay}
             </span>
-            <span>Google · 1,146+ verified reviews</span>
+            <span>{h.ratingSub}</span>
             <span className="hidden text-white/30 sm:inline">·</span>
-            <span className="hidden sm:inline">
-              Sugar Land&apos;s #1 Halal Kitchen
-            </span>
+            <span className="hidden sm:inline">{h.ratingTagline}</span>
           </div>
         </div>
 
@@ -147,7 +118,10 @@ export function Hero() {
           style={{ y: yCollage }}
           className="relative hidden min-h-[420px] md:col-span-2 md:block"
         >
-          {floatCards.map((c) => (
+          {h.floatCards.map((c, i) => {
+            const layout = HERO_FLOAT_CARD_LAYOUT[i];
+            if (!layout) return null;
+            return (
             <motion.div
               key={c.title}
               initial={{ opacity: 0, y: 24 }}
@@ -157,7 +131,7 @@ export function Hero() {
                 duration: 0.7,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className={`absolute w-[220px] rounded-2xl bg-white/95 p-3 shadow-xl backdrop-blur ${c.className}`}
+              className={`absolute w-[220px] rounded-2xl bg-white/95 p-3 shadow-xl backdrop-blur ${layout}`}
             >
               <motion.div
                 animate={{ y: [0, -6, 0] }}
@@ -179,12 +153,15 @@ export function Hero() {
                 </div>
               </motion.div>
             </motion.div>
-          ))}
+            );
+          })}
         </motion.div>
       </div>
 
       <div className="pointer-events-none absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-2 text-white/40">
-        <span className="font-sans text-[10px] tracking-[0.3em]">SCROLL</span>
+        <span className="font-sans text-[10px] tracking-[0.3em]">
+          {h.scrollCue}
+        </span>
         <motion.div
           animate={{ y: [0, 6, 0] }}
           transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}

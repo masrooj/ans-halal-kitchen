@@ -5,10 +5,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import { menuCategories } from "@/data/menu";
 import { MenuCard } from "@/components/ui/MenuCard";
 import { sectionVariants, viewportOnce } from "@/lib/animations";
+import { HOME_PAGE } from "@/cms/home.page";
 
 const MAX_CARDS = 9;
 
 export function MenuSection() {
+  const m = HOME_PAGE.menuSection;
   const [active, setActive] = useState(menuCategories[0]!.id);
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
@@ -52,14 +54,12 @@ export function MenuSection() {
           viewport={viewportOnce}
         >
           <p className="font-sans text-xs font-medium uppercase tracking-[0.3em] text-ans-gold">
-            Menu
+            {m.eyebrow}
           </p>
           <h2 className="mt-3 font-display text-[40px] text-ans-emerald md:text-[52px]">
-            Everything on our menu.
+            {m.headline}
           </h2>
-          <p className="mt-4 max-w-xl font-sans text-ans-muted">
-            Scroll through — or jump to your craving.
-          </p>
+          <p className="mt-4 max-w-xl font-sans text-ans-muted">{m.sub}</p>
         </motion.div>
 
         <div className="sticky top-[64px] z-40 -mx-4 mt-10 overflow-x-auto bg-ans-cream/95 px-4 py-3 backdrop-blur md:-mx-0 md:px-0">
@@ -114,8 +114,8 @@ export function MenuSection() {
               className="hover:text-ans-emerald"
             >
               {expanded
-                ? "Show less ↑"
-                : `See all ${category.label.replace(/^[^\s]+\s/, "")} →`}
+                ? m.expandLess
+                : `${m.expandMorePrefix}${category.label.replace(/^[^\s]+\s/, "")} →`}
             </button>
           </p>
         ) : null}

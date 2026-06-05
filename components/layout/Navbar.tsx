@@ -6,15 +6,12 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { HalalBadge } from "@/components/ui/HalalBadge";
 import { SITE } from "@/lib/site";
-
-const navLinks = [
-  { href: "#story", label: "About" },
-  { href: "#menu", label: "Menu" },
-  { href: "#story", label: "Our Story" },
-  { href: "#reviews", label: "Reviews" },
-  { href: "#order", label: "Order Online" },
-  { href: "#contact", label: "Contact" },
-];
+import {
+  NAVBAR_MOBILE_ORDER_CTA,
+  NAVBAR_ORDER_CTA,
+  NAVBAR_PRIMARY_LINKS,
+  NAVBAR_WORDMARK,
+} from "@/cms/nav.catalog";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
@@ -26,10 +23,10 @@ export function Navbar() {
           <div className="flex items-center gap-3">
             <Link href="#hero" className="group flex flex-col leading-tight">
               <span className="font-display text-[28px] italic text-ans-emerald transition-colors group-hover:text-ans-emerald-mid">
-                A&amp;N&apos;s
+                {NAVBAR_WORDMARK.line1}
               </span>
               <span className="font-sans text-[9px] font-medium uppercase tracking-[0.35em] text-ans-gold">
-                Halal Kitchen
+                {NAVBAR_WORDMARK.line2}
               </span>
             </Link>
             <HalalBadge size="sm" className="hidden sm:inline-flex" />
@@ -39,9 +36,9 @@ export function Navbar() {
             className="hidden items-center gap-8 md:flex"
             aria-label="Primary"
           >
-            {navLinks.map((l) => (
+            {NAVBAR_PRIMARY_LINKS.map((l) => (
               <Link
-                key={l.href}
+                key={`${l.href}-${l.label}`}
                 href={l.href}
                 className="font-sans text-sm font-medium text-ans-charcoal transition-colors duration-200 hover:text-ans-gold"
               >
@@ -63,7 +60,7 @@ export function Navbar() {
               rel="noopener noreferrer"
               className="rounded-full bg-ans-emerald px-5 py-2.5 font-sans text-sm text-white shadow-sm transition-all hover:bg-ans-emerald-mid hover:shadow-md"
             >
-              Order Now
+              {NAVBAR_ORDER_CTA}
             </a>
           </div>
 
@@ -98,9 +95,9 @@ export function Navbar() {
                 </button>
               </div>
               <nav className="mt-8 flex flex-1 flex-col gap-2">
-                {navLinks.map((l, i) => (
+                {NAVBAR_PRIMARY_LINKS.map((l, i) => (
                   <motion.div
-                    key={l.label}
+                    key={`${l.href}-${l.label}`}
                     initial={{ opacity: 0, x: -40 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.08, duration: 0.45 }}
@@ -128,7 +125,7 @@ export function Navbar() {
                   rel="noopener noreferrer"
                   className="rounded-full bg-white px-6 py-3 text-center font-sans font-semibold text-ans-emerald"
                 >
-                  Order Now
+                  {NAVBAR_MOBILE_ORDER_CTA}
                 </a>
               </div>
             </div>

@@ -2,8 +2,11 @@
 
 import { Phone } from "lucide-react";
 import { SITE } from "@/lib/site";
+import { HOME_PAGE } from "@/cms/home.page";
 
 export function MobileOrderBar() {
+  const label = HOME_PAGE.howItWorks.doorDashLabel;
+
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 flex gap-3 border-t border-white/10 bg-ans-emerald px-4 py-3 text-white md:hidden pb-[max(0.75rem,env(safe-area-inset-bottom))]">
       <a
@@ -12,7 +15,7 @@ export function MobileOrderBar() {
         rel="noopener noreferrer"
         className="flex-1 rounded-full bg-white py-3 text-center font-sans text-sm font-semibold text-ans-emerald"
       >
-        Order on DoorDash
+        {label}
       </a>
       <a
         href={`tel:${SITE.phoneTel}`}

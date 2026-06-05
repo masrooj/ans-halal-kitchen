@@ -9,8 +9,10 @@ import { reviews } from "@/data/reviews";
 import { ReviewCard } from "@/components/ui/ReviewCard";
 import { sectionVariants, viewportOnce } from "@/lib/animations";
 import { SITE } from "@/lib/site";
+import { HOME_PAGE } from "@/cms/home.page";
 
 export function Reviews() {
+  const rv = HOME_PAGE.reviews;
   const [emblaRef, emblaApi] = useEmblaCarousel(
     { loop: true, align: "start", skipSnaps: false },
     [Autoplay({ delay: 5000, stopOnInteraction: false })],
@@ -40,25 +42,23 @@ export function Reviews() {
           viewport={viewportOnce}
         >
           <p className="font-sans text-xs font-medium uppercase tracking-widest text-ans-gold">
-            Reviews
+            {rv.eyebrow}
           </p>
           <h2 className="mt-3 font-display text-[40px] text-ans-emerald md:text-[52px]">
-            What Sugar Land is saying.
+            {rv.headline}
           </h2>
           <div className="mt-6 flex flex-wrap items-center gap-4 text-ans-muted md:gap-6">
-            <span className="font-display text-4xl text-ans-emerald">⭐ 4.9</span>
-            <span className="font-sans text-sm">out of 5</span>
+            <span className="font-display text-4xl text-ans-emerald">{rv.ratingEmoji}</span>
+            <span className="font-sans text-sm">{rv.outOf}</span>
             <span className="hidden text-white/20 sm:inline">|</span>
-            <span className="font-sans text-sm">1,146 reviews on Google</span>
+            <span className="font-sans text-sm">{rv.googleLine}</span>
             <span className="hidden sm:inline">|</span>
-            <span className="font-sans text-sm">★★★★ 4.0 on Facebook</span>
+            <span className="font-sans text-sm">{rv.facebookLine}</span>
             <span className="hidden sm:inline">|</span>
-            <span className="font-sans text-sm">
-              #59 of 830 restaurants in Sugar Land
-            </span>
+            <span className="font-sans text-sm">{rv.rankingLine}</span>
           </div>
           <p className="mt-3 font-sans text-[13px] italic text-ans-muted">
-            Showing 5 most recent reviews
+            {rv.carouselHint}
           </p>
         </motion.div>
 
@@ -117,7 +117,7 @@ export function Reviews() {
               rel="noopener noreferrer"
               className="font-sans text-sm text-ans-gold underline-offset-4 hover:text-ans-emerald hover:underline"
             >
-              Read all reviews on Google
+              {rv.readAllCta}
             </a>
           </p>
         </div>

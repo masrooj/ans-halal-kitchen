@@ -1,8 +1,8 @@
+import { HOME_PAGE } from "@/cms/home.page";
+
 export function MarqueeTrustBar() {
-  const row1 =
-    "Zabiha Halal · Hand Cut · Karachi Recipes · Fresh Daily · Pakistani Cuisine · Family Owned · Sugar Land TX · Authentic Spices · ";
-  const row2 =
-    "BIRYANI · NIHARI · KABAB ROLLS · KARAHI · HALWA POORI · ZINGER BURGER · WINGS · MUTTON · BEEF · CHICKEN · FISH · NAAN · ";
+  const row1 = HOME_PAGE.marquee.row1;
+  const row2 = HOME_PAGE.marquee.row2;
 
   return (
     <section
