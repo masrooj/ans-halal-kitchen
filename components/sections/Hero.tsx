@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { AnimatedLine } from "@/components/ui/AnimatedText";
@@ -9,21 +10,23 @@ import {
   blurPlaceholder,
   hasMapsVenuePhotosEnabled,
   heroBackgroundSrc,
+  heroCollageSrc,
 } from "@/lib/images";
 import { SITE } from "@/lib/site";
 import { HOME_PAGE } from "@/cms/home.page";
 
 /**
- * Original scatter layout (same as first hero). Full literals so Tailwind JIT
- * always emits these utilities — do not build positioning from runtime strings.
+ * Pill positions around the hero food image (left ×3, right ×3).
+ * Full literals so Tailwind JIT always emits these utilities.
  * Must match `HOME_PAGE.hero.floatCards` length and order.
  */
-const HERO_FLOAT_CARD_LAYOUT = [
-  "top-[6%] left-[4%] -rotate-3",
-  "top-[8%] right-[6%] rotate-2",
-  "top-[38%] left-[2%] -rotate-1",
-  "bottom-[18%] right-[4%] rotate-3",
-  "bottom-[10%] left-[8%] -rotate-2",
+const HERO_FLOAT_PILL_LAYOUT = [
+  "-left-3 top-[6%] md:-left-8",
+  "-left-5 top-[40%] md:-left-12",
+  "-left-2 bottom-[10%] md:-left-6",
+  "-right-3 top-[8%] md:-right-8",
+  "-right-5 top-[44%] md:-right-11",
+  "-right-2 bottom-[12%] md:-right-6",
 ] as const;
 
 export function Hero() {
@@ -116,45 +119,60 @@ export function Hero() {
 
         <motion.div
           style={{ y: yCollage }}
-          className="relative hidden min-h-[420px] md:col-span-2 md:block"
+          className="relative mx-auto flex w-full justify-center md:col-span-2 md:mx-0"
         >
-          {h.floatCards.map((c, i) => {
-            const layout = HERO_FLOAT_CARD_LAYOUT[i];
-            if (!layout) return null;
-            return (
-            <motion.div
-              key={c.title}
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                delay: 0.5 + c.delay,
-                duration: 0.7,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              className={`absolute w-[220px] rounded-2xl bg-white/95 p-3 shadow-xl backdrop-blur ${layout}`}
-            >
-              <motion.div
-                animate={{ y: [0, -6, 0] }}
-                transition={{
-                  duration: 4 + c.delay * 3,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                className="flex items-center gap-2"
-              >
-                <span className="text-2xl" aria-hidden>
-                  {c.emoji}
-                </span>
-                <div>
-                  <p className="font-sans text-[13px] font-semibold text-ans-emerald">
-                    {c.title}
-                  </p>
-                  <p className="font-sans text-[11px] text-ans-muted">{c.tag}</p>
-                </div>
-              </motion.div>
-            </motion.div>
-            );
-          })}
+          <div className="relative aspect-[3/4] w-full max-w-[280px] sm:max-w-[300px] md:max-w-[320px]">
+            <div className="relative h-full w-full overflow-hidden rounded-[28px] shadow-[0_24px_60px_rgba(0,0,0,0.35)] ring-1 ring-white/20">
+              <Image
+                src={heroCollageSrc}
+                alt="Chicken biryani and Pakistani halal specialties"
+                fill
+                sizes="(max-width:768px) 280px, 320px"
+                className="object-cover"
+                placeholder="blur"
+                blurDataURL={blurPlaceholder}
+              />
+            </div>
+
+            {h.floatCards.map((c, i) => {
+              const layout = HERO_FLOAT_PILL_LAYOUT[i];
+              if (!layout) return null;
+              return (
+                <motion.div
+                  key={c.title}
+                  initial={{ opacity: 0, scale: 0.92 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{
+                    delay: 0.45 + c.delay,
+                    duration: 0.55,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  className={`absolute z-10 ${layout}`}
+                >
+                  <motion.div
+                    animate={{ y: [0, -4, 0] }}
+                    transition={{
+                      duration: 3.5 + c.delay * 2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                  >
+                    <Link
+                      href="#menu"
+                      className="flex items-center gap-2 whitespace-nowrap rounded-full bg-white px-3.5 py-2 shadow-[0_4px_18px_rgba(0,0,0,0.14)] transition-transform hover:scale-[1.03] sm:px-4 sm:py-2.5"
+                    >
+                      <span className="text-lg leading-none sm:text-xl" aria-hidden>
+                        {c.emoji}
+                      </span>
+                      <span className="font-sans text-[13px] font-medium text-ans-charcoal sm:text-sm">
+                        {c.title}
+                      </span>
+                    </Link>
+                  </motion.div>
+                </motion.div>
+              );
+            })}
+          </div>
         </motion.div>
       </div>
 

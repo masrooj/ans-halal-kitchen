@@ -19,38 +19,14 @@ export const HOME_PAGE = {
     ratingSub: "Google · 1,146+ verified reviews",
     ratingTagline: "Sugar Land's #1 Halal Kitchen",
     scrollCue: "SCROLL",
-    /** Emoji / title / tag / stagger — scatter positions live in `components/sections/Hero.tsx` as `HERO_FLOAT_CARD_LAYOUT` (Tailwind). */
+    /** Short pill labels — positions in `components/sections/Hero.tsx` (`HERO_FLOAT_PILL_LAYOUT`). */
     floatCards: [
-      {
-        emoji: "🍛",
-        title: "Chicken Biryani",
-        tag: "Best Seller",
-        delay: 0,
-      },
-      {
-        emoji: "🥩",
-        title: "Beef Nihari",
-        tag: "Karachi Recipe",
-        delay: 0.15,
-      },
-      {
-        emoji: "🌯",
-        title: "Bihari Kabab Roll",
-        tag: "Fan Favorite",
-        delay: 0.3,
-      },
-      {
-        emoji: "🍗",
-        title: "Halwa Poori",
-        tag: "Weekends Only",
-        delay: 0.45,
-      },
-      {
-        emoji: "🔥",
-        title: "Hot Wings",
-        tag: "6pc $13.95",
-        delay: 0.6,
-      },
+      { emoji: "✓", title: "Zabiha Halal", delay: 0 },
+      { emoji: "🍛", title: "Biryani", delay: 0.1 },
+      { emoji: "🥩", title: "Nihari", delay: 0.2 },
+      { emoji: "🌯", title: "Kabab Rolls", delay: 0.3 },
+      { emoji: "🍗", title: "Halwa Poori", delay: 0.4 },
+      { emoji: "🔥", title: "Wings", delay: 0.5 },
     ],
   },
 
